@@ -1,0 +1,10 @@
+{
+  "name": "dear-you-shared",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "index.ts",
+  "dependencies": {
+    "zod": "^3.24.1"
+  }
+}
