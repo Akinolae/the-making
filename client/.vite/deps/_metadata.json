@@ -2,7 +2,102 @@
   "hash": "1fa71fe3",
   "configHash": "f8c44dc1",
   "lockfileHash": "b3af8262",
-  "browserHash": "7f0cae35",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "cd148522",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "157216b2",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "62be8274",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "07e9b8ee",
+      "needsInterop": true
+    },
+    "@tanstack/react-router": {
+      "src": "../../node_modules/@tanstack/react-router/dist/esm/index.dev.js",
+      "file": "@tanstack_react-router.js",
+      "fileHash": "403d6408",
+      "needsInterop": false
+    },
+    "@tanstack/react-query": {
+      "src": "../../node_modules/@tanstack/react-query/build/modern/index.js",
+      "file": "@tanstack_react-query.js",
+      "fileHash": "2b3c4940",
+      "needsInterop": false
+    },
+    "sileo": {
+      "src": "../../../node_modules/sileo/dist/index.mjs",
+      "file": "sileo.js",
+      "fileHash": "b734942c",
+      "needsInterop": false
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.js",
+      "file": "lucide-react.js",
+      "fileHash": "1330bdcc",
+      "needsInterop": false
+    },
+    "framer-motion": {
+      "src": "../../../node_modules/framer-motion/dist/es/index.mjs",
+      "file": "framer-motion.js",
+      "fileHash": "ad3b5cc8",
+      "needsInterop": false
+    },
+    "firebase/auth": {
+      "src": "../../../node_modules/firebase/auth/dist/esm/index.esm.js",
+      "file": "firebase_auth.js",
+      "fileHash": "8b7d4977",
+      "needsInterop": false
+    },
+    "antd": {
+      "src": "../../../node_modules/antd/es/index.js",
+      "file": "antd.js",
+      "fileHash": "1d82b26d",
+      "needsInterop": false
+    },
+    "firebase/app": {
+      "src": "../../../node_modules/firebase/app/dist/esm/index.esm.js",
+      "file": "firebase_app.js",
+      "fileHash": "c39417c8",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "08fc14eb",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-OFPPDHWP": {
+      "file": "chunk-OFPPDHWP.js"
+    },
+    "chunk-3F3445U5": {
+      "file": "chunk-3F3445U5.js"
+    },
+    "chunk-3WA3U6CM": {
+      "file": "chunk-3WA3U6CM.js"
+    },
+    "chunk-UAWWTGLP": {
+      "file": "chunk-UAWWTGLP.js"
+    },
+    "chunk-L5DIBE5G": {
+      "file": "chunk-L5DIBE5G.js"
+    },
+    "chunk-SV7XTP3G": {
+      "file": "chunk-SV7XTP3G.js"
+    },
+    "chunk-SNAQBZPT": {
+      "file": "chunk-SNAQBZPT.js"
+    }
+  }
 }
