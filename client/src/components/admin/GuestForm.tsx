@@ -42,7 +42,10 @@ export default function GuestForm({ guest, saving, onSave, onCancel }: GuestForm
       onOk={handleSubmit}
       onCancel={onCancel}
       confirmLoading={saving}
-      okButtonProps={{ disabled: !isValid }}
+      okButtonProps={{
+        disabled: !isValid,
+        className: '!bg-burgundy !text-cream hover:!bg-burgundy/80 border-none disabled:!opacity-50 disabled:!bg-burgundy/30 disabled:!text-cream/50',
+      }}
       okText={guest ? 'Save Changes' : 'Add Guest'}
       cancelText="Cancel"
       centered

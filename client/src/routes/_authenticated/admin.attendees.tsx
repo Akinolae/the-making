@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_authenticated/admin/attendees')({
 function AttendeesPage() {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<Filter>({});
-  const { attendees, stats, isLoading, createAttendee, bulkCreateAttendees, updateAttendee, deleteAttendee } = useAttendees(filters);
+  const { attendees, stats, isLoading, error, createAttendee, bulkCreateAttendees, updateAttendee, deleteAttendee } = useAttendees(filters);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showBulkAdd, setShowBulkAdd] = useState(false);
   const [editingAttendee, setEditingAttendee] = useState<Attendee | null>(null);
@@ -41,6 +41,15 @@ function AttendeesPage() {
     await bulkCreateAttendees.mutateAsync(attendeesList);
     setShowBulkAdd(false);
   };
+
+  if (error) {
+    return (
+      <div className="p-8 text-center text-destructive">
+        <p className="font-semibold text-lg text-burgundy">Failed to load attendees</p>
+        <p className="text-sm mt-2 text-ink/80">{(error as Error).message || String(error)}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-blush px-4 py-10 sm:px-8">

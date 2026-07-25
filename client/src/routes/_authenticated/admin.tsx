@@ -55,9 +55,8 @@ function AdminPage() {
   if (error) {
     return (
       <div className="p-8 text-center text-destructive">
-        {(error as any)?.response?.data?.error?.message === 'Forbidden'
-          ? 'This account is not an admin. Ask the site owner for access.'
-          : 'An error occurred. Please try again.'}
+        <p className="font-semibold text-lg text-burgundy">Failed to load guests</p>
+        <p className="text-sm mt-2 text-ink/80">{(error as Error).message || String(error)}</p>
       </div>
     );
   }
@@ -116,7 +115,7 @@ function AdminPage() {
                 copiedSlug={copiedSlug}
                 onCopyLink={handleCopyLink}
                 onEdit={setEditingGuest}
-                onDelete={() => deleteGuest.mutate(guest.slug)}
+                onDelete={() => deleteGuest.mutateAsync(guest.slug)}
               />
             ))}
           </div>

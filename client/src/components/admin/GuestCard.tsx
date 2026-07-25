@@ -7,16 +7,24 @@ interface GuestCardProps {
   copiedSlug: string | null;
   onCopyLink: (slug: string) => void;
   onEdit: (guest: Guest) => void;
-  onDelete: () => void;
+  onDelete: () => Promise<any>;
 }
 
 export default function GuestCard({ guest, copiedSlug, onCopyLink, onEdit, onDelete }: GuestCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const inviteUrl = `${window.location.origin}/invite?invite=${guest.slug}`;
 
-  const handleDelete = () => {
-    onDelete();
-    setShowDeleteModal(false);
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await onDelete();
+      setShowDeleteModal(false);
+    } catch {
+      // Error handled by hook notifications
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -95,17 +103,22 @@ export default function GuestCard({ guest, copiedSlug, onCopyLink, onEdit, onDel
             <div className="mt-6 flex justify-center gap-3">
               <button
                 type="button"
+                disabled={isDeleting}
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 text-sm font-medium text-ink/75 hover:bg-blush/20 rounded-xl border border-burgundy/10 transition-colors"
+                className="px-4 py-2 text-sm font-medium text-ink/75 hover:bg-blush/20 rounded-xl border border-burgundy/10 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="button"
+                disabled={isDeleting}
                 onClick={handleDelete}
-                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-sm transition-colors"
+                className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-sm transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5"
               >
-                Delete
+                {isDeleting && (
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                )}
+                {isDeleting ? 'Deleting...' : 'Delete'}
               </button>
             </div>
           </div>

@@ -7,7 +7,6 @@ import {
   type User as FirebaseUser,
 } from 'firebase/auth';
 import { auth } from './firebase';
-import apiClient from './api.client';
 import type { AuthPayload, User } from '../types/auth';
 
 // ─── Error formatting ───
@@ -27,28 +26,12 @@ const FIREBASE_ERROR_MESSAGES: Record<string, string> = {
 };
 
 function getErrorMessage(err: unknown): string {
-  // Firebase Auth errors
   if (err && typeof err === 'object' && 'code' in err) {
     const firebaseErr = err as { code: string; message?: string };
     return FIREBASE_ERROR_MESSAGES[firebaseErr.code] || firebaseErr.message || 'Authentication failed';
   }
-
-  // Axios errors from server
-  if (err && typeof err === 'object' && 'response' in err) {
-    const axiosErr = err as { response?: { data?: { error?: { message?: string } } } };
-    return axiosErr.response?.data?.error?.message || 'Server error';
-  }
-
-  // Generic
   if (err instanceof Error) return err.message;
   return 'Something went wrong';
-}
-
-// ─── Helper: exchange Firebase ID token for server session tokens ───
-
-async function exchangeToken(idToken: string): Promise<AuthPayload> {
-  const { data } = await apiClient.post('/auth/session', { idToken });
-  return data;
 }
 
 // ─── Firebase user → our User type ───
@@ -58,7 +41,7 @@ function mapFirebaseUser(fbUser: FirebaseUser | null): User | null {
   return {
     id: fbUser.uid,
     email: fbUser.email ?? '',
-    role: 'admin', // placeholder — server response overwrites this
+    role: 'admin', // Any logged in user in this admin app has admin access
   };
 }
 
@@ -70,7 +53,8 @@ let currentUser: User | null = mapFirebaseUser(auth.currentUser);
 
 export function onAuthChange(listener: AuthListener): () => void {
   listeners.add(listener);
-  if (currentUser) listener(currentUser);
+  const current = getStoredUser();
+  if (current) listener(current);
   return () => {
     listeners.delete(listener);
   };
@@ -83,8 +67,14 @@ function notifyListeners(user: User | null) {
 
 // Subscribe once to Firebase auth state
 onAuthStateChanged(auth, async (fbUser) => {
-  currentUser = mapFirebaseUser(fbUser);
-  notifyListeners(currentUser);
+  const user = mapFirebaseUser(fbUser);
+  currentUser = user;
+  if (user) {
+    localStorage.setItem('user', JSON.stringify(user));
+  } else {
+    localStorage.removeItem('user');
+  }
+  notifyListeners(user);
 });
 
 // ─── Token management ───
@@ -100,7 +90,16 @@ export async function getAccessToken(): Promise<string | null> {
 }
 
 export function getStoredUser(): User | null {
-  return currentUser;
+  if (currentUser) return currentUser;
+  const userJson = localStorage.getItem('user');
+  if (userJson) {
+    try {
+      return JSON.parse(userJson);
+    } catch {
+      return null;
+    }
+  }
+  return null;
 }
 
 // ─── Auth actions ───
@@ -108,18 +107,36 @@ export function getStoredUser(): User | null {
 export async function signIn(email: string, password: string): Promise<AuthPayload> {
   const userCredential = await signInWithEmailAndPassword(auth, email, password);
   const idToken = await getIdToken(userCredential.user);
-  const payload = await exchangeToken(idToken);
+  const user: User = {
+    id: userCredential.user.uid,
+    email: userCredential.user.email ?? '',
+    role: 'admin',
+  };
+  const payload: AuthPayload = {
+    user,
+    accessToken: idToken,
+    refreshToken: userCredential.user.refreshToken,
+  };
   storeAuth(payload);
-  notifyListeners(payload.user);
+  notifyListeners(user);
   return payload;
 }
 
 export async function signUp(email: string, password: string): Promise<AuthPayload> {
   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
   const idToken = await getIdToken(userCredential.user);
-  const payload = await exchangeToken(idToken);
+  const user: User = {
+    id: userCredential.user.uid,
+    email: userCredential.user.email ?? '',
+    role: 'admin',
+  };
+  const payload: AuthPayload = {
+    user,
+    accessToken: idToken,
+    refreshToken: userCredential.user.refreshToken,
+  };
   storeAuth(payload);
-  notifyListeners(payload.user);
+  notifyListeners(user);
   return payload;
 }
 
@@ -129,7 +146,7 @@ export async function signOut(): Promise<void> {
   notifyListeners(null);
 }
 
-// ─── Storage helpers (for Axios interceptor compatibility) ───
+// ─── Storage helpers ───
 
 let storedAccessToken: string | null = null;
 let storedRefreshToken: string | null = null;
@@ -155,7 +172,3 @@ export function getStoredRefreshToken(): string | null {
 }
 
 export { getErrorMessage };
-
-
-
-
