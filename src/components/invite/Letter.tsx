@@ -223,8 +223,7 @@ export default function Letter({ guest }: LetterProps) {
                   The Havillah, Sharon House Int'l Church
                 </p>
                 <p className="mt-2 font-body text-sm text-ink/60">
-                  Beside Mark-ez Hotel, off Mama Mudiaga Street, Usieffurun
-                  Road, Orhuwhorun
+                  Beside Mark-ez Hotel, off Mama Mudiaga Street, Usieffurun Road, Warri, Delta State
                 </p>
               </div>
             </div>
@@ -242,7 +241,7 @@ export default function Letter({ guest }: LetterProps) {
                   2CR Event Centre
                 </p>
                 <p className="mt-2 font-body text-sm text-ink/60">
-                  Usieffurun Road
+                  Usieffurun Road, Warri, Delta State
                 </p>
               </div>
             </div>
