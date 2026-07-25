@@ -285,6 +285,20 @@ export default function Letter({ guest }: LetterProps) {
           </h2>
 
           <div className="mt-8 grid grid-cols-1 gap-4">
+            {/* Asoebi Info Card — only for Asoebi Ladies */}
+            {guest.role === "Asoebi Lady" && (
+              <div className="rounded-2xl border border-burgundy/5 bg-cream p-6 shadow-sm text-left flex flex-col justify-between">
+                <span>👗</span>
+                <div>
+                  <p className="font-display text-[1.6rem] text-burgundy font-medium leading-snug">
+                    Asoebi is <strong className="font-bold text-[2rem]">₦50,000</strong>
+                  </p>
+                  <span className="mt-3 block font-body text-[0.7rem] tracking-widest text-burgundy/50 uppercase">
+                    Contact the bride for payment details
+                  </span>
+                </div>
+              </div>
+            )}
             {/* Sparkles Card */}
             <a
               href={getWhatsAppLink(acceptMessage)}
