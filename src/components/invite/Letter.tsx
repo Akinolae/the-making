@@ -95,12 +95,12 @@ export default function Letter({ guest }: LetterProps) {
           <img
             src="/assets/letter-flower.png"
             alt=""
-            className="absolute -top-16 -left-16 w-48 h-48 object-contain pointer-events-none opacity-10 rotate-90 z-0"
+            className="absolute -top-16 -left-16 w-48 h-48 object-contain pointer-events-none opacity-70 rotate-90 z-0"
           />
           <img
             src="/assets/letter-flower.png"
             alt=""
-            className="absolute -bottom-16 -right-16 w-48 h-48 object-contain pointer-events-none opacity-10 -rotate-90 scale-x-[-1] z-0"
+            className="absolute -bottom-16 -right-16 w-48 h-48 object-contain pointer-events-none opacity-[45%] -rotate-90 scale-x-[-1] z-0"
           />
 
           {/* Group Greeting and Body at the top, signature at the bottom */}
@@ -112,7 +112,7 @@ export default function Letter({ guest }: LetterProps) {
                 <img
                   src="/assets/letter-flower.png"
                   alt=""
-                  className="absolute -top-24 -left-16 w-56 h-56 object-contain pointer-events-none opacity-85 z-0"
+                  className="absolute -top-40 -left-16 w-56 h-56 object-contain pointer-events-none opacity-85 z-0"
                 />
                 <div className="relative z-10 space-y-1">
                   {guest.title && (
