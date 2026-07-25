@@ -46,6 +46,25 @@ function InvitePage() {
     }
   }, [isMuted]);
 
+  // Pause music when the user leaves the screen / tab
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!audioRef.current || isMuted) return;
+
+      if (document.hidden) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch((err) => {
+          console.warn("Audio resume failed:", err);
+        });
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, [isMuted]);
+
   const handleOpenEnvelope = () => {
     setIsOpened(true);
     setIsMuted(false); // Unmute and play on user interaction
