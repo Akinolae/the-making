@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
+import { Toaster } from "sileo";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,8 +28,6 @@ declare module "@tanstack/react-router" {
     router: typeof router;
   }
 }
-
-import { Toaster } from "sileo";
 
 function App() {
   return (
