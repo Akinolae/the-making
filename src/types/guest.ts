@@ -4,7 +4,7 @@ export type GuestRole =
   | 'Bridesmaid'
   | 'Groomsman'
   | 'Asoebi Lady'
-  | 'Asoebi Gentleman'
+  | 'Agbada Gentleman'
   | 'Guest'
   | 'Family'
   | 'VIP';

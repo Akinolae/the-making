@@ -94,7 +94,7 @@ export default function GuestForm({ guest, saving, onSave, onCancel }: GuestForm
             <option>Bridesmaid</option>
             <option>Groomsman</option>
             <option>Asoebi Lady</option>
-            <option>Asoebi Gentleman</option>
+            <option>Agbada Gentleman</option>
             <option>Family</option>
             <option>VIP</option>
             <option>Guest</option>

@@ -25,8 +25,8 @@ export default function Letter({ guest }: LetterProps) {
         return "Will you celebrate beside me as one of my Groomsmen?";
       case "Asoebi Lady":
         return "Will you celebrate beside me as one of my Asoebi Ladies?";
-      case "Asoebi Gentleman":
-        return "Will you celebrate beside me as one of my Asoebi Gentlemen?";
+      case "Agbada Gentleman":
+        return "Will you celebrate beside me as one of my Agbada Gentlemen?";
       default:
         return "Will you celebrate beside us on our special day?";
     }
@@ -36,7 +36,7 @@ export default function Letter({ guest }: LetterProps) {
     if (role === "Bridesmaid" || role === "Asoebi Lady") {
       return "Every bride needs the women who shaped her. You are one of mine.";
     }
-    if (role === "Groomsman" || role === "Asoebi Gentleman") {
+    if (role === "Groomsman" || role === "Agbada Gentleman") {
       return "Every groom needs the brothers who stood by him. You are one of mine.";
     }
     return "We cannot imagine this celebration without the people who mean the most to us.";

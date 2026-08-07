@@ -56,7 +56,9 @@ export function getAdminByEmail(
  * until they are backfilled.
  */
 export function getFallbackWhatsapp(gender: string): string {
-  return gender === "female" ? import.meta.env.VITE_GLORY : import.meta.env.VITE_AKIN;
+  return gender === "female"
+    ? import.meta.env.VITE_GLORY
+    : import.meta.env.VITE_AKIN;
 }
 
 /**
