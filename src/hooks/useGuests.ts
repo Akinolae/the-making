@@ -12,6 +12,7 @@ import {
 } from 'firebase/firestore';
 import { db, auth } from '../lib/firebase';
 import { slugify } from '../lib/utils';
+import { getAdminByEmail } from '../lib/admins';
 import type { Guest, GuestInput } from '../types/guest';
 import { sileo } from 'sileo';
 
@@ -45,9 +46,13 @@ export function useGuests() {
         throw new Error(`A guest with slug "${slug}" already exists`);
       }
 
+      // Route RSVP replies to the number of the admin who invites this guest
+      const admin = getAdminByEmail(auth.currentUser?.email);
+
       const newGuest = {
         ...input,
         slug: slug.toLowerCase(),
+        whatsapp: admin?.whatsapp,
         createdBy: auth.currentUser?.uid || 'anonymous',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),

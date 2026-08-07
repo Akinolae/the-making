@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Calendar, MapPin, MessageCircle } from "lucide-react";
 import { getHonorific } from "../../lib/utils";
+import { getFallbackWhatsapp, formatWhatsapp } from "../../lib/admins";
 import type { Guest } from "../../types/guest";
 
 interface LetterProps {
@@ -11,11 +12,9 @@ export default function Letter({ guest }: LetterProps) {
   const honorific = getHonorific(guest.gender, guest.role);
   const fullName = `${honorific}${guest.name}`;
 
-  // WhatsApp configuration
-  const WHATSAPP_NUMBER =
-    guest.gender === "female"
-      ? import.meta.env.VITE_GLORY
-      : import.meta.env.VITE_AKIN;
+  // WhatsApp configuration: route replies to the admin who invited this guest.
+  // Fall back to the legacy gender heuristic for guests without an owner tag.
+  const WHATSAPP_NUMBER = guest.whatsapp || getFallbackWhatsapp(guest.gender);
 
   // Role details mapping
   const getRoleQuestion = (role: string) => {
@@ -264,7 +263,7 @@ export default function Letter({ guest }: LetterProps) {
                   rel="noreferrer"
                   className="mt-2 inline-block font-body text-sm text-burgundy hover:underline"
                 >
-                  +234 811 121 9577
+                  {formatWhatsapp(WHATSAPP_NUMBER)}
                 </a>
               </div>
             </div>

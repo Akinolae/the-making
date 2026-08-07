@@ -17,6 +17,12 @@ export interface Guest {
   title: string;
   role: string;
   message: string;
+  /**
+   * WhatsApp number (digits only, incl. country code) that should receive
+   * this guest's RSVP replies. Set to the number of the admin who invited
+   * the guest. Optional so legacy guests fall back to gender-based routing.
+   */
+  whatsapp?: string;
   inviteUrl: string;
   createdAt?: string;
   updatedAt?: string;
